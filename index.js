@@ -5,7 +5,7 @@ const http = require('http');
 // ---- Config (can be overridden with environment variables on Render) ----
 const HOST = process.env.MC_HOST || 'noblesmp.mcsh.io';
 const PORT = parseInt(process.env.MC_PORT || '25565', 10);
-const USERNAME = process.env.MC_USERNAME || 'RomKillerV3';
+const USERNAME = process.env.MC_USERNAME || 'RomKillerV2';
 const LOGIN_PASSWORD = process.env.MC_LOGIN_PASSWORD || 'chalol78';
 // Auto-detect can fail if the server reports a custom/proxy version string
 // mineflayer's bundled minecraft-data doesn't recognize. Pin explicitly to
