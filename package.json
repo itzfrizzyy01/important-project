@@ -1,0 +1,19 @@
+{
+  "name": "romkiller-bot",
+  "version": "1.0.0",
+  "description": "RomKillerV2 - auto-joining Minecraft bot for noblesmp.mcsh.io with resource pack auto-accept, auto-login, wandering, and auto-reconnect",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.27.0",
+    "mineflayer": "^4.37.1"
+  }
+}

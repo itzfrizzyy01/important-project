@@ -1,0 +1,23 @@
+RESOURCE PACK FIX - 1.21.x
+==========================
+
+The server was sending add_resource_pack, but the bot remained connected only
+with keep_alive packets and never reached spawn.
+
+This build handles add_resource_pack directly instead of calling
+bot.acceptResourcePack(), because Mineflayer sends ACCEPTED (3) and
+SUCCESSFULLY_LOADED (0) back-to-back. Some Paper/proxy setups can leave the
+connection waiting when those packets arrive in the same tick.
+
+The bot now sends:
+  1. result 3 = ACCEPTED (equivalent to pressing Proceed)
+  2. waits 1500 ms
+  3. result 0 = SUCCESSFULLY_LOADED
+
+The bot does not need to render the pack. It only completes the server-side
+resource-pack handshake so it can continue to spawn.
+
+The spawn watchdog was also increased from 25 seconds to 60 seconds.
+
+Mineflayer: 4.37.1
+Node: >=22
