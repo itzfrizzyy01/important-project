@@ -10,7 +10,7 @@ const LOGIN_PASSWORD = process.env.MC_LOGIN_PASSWORD || 'chalol78';
 // Auto-detect can fail if the server reports a custom/proxy version string
 // mineflayer's bundled minecraft-data doesn't recognize. Pin explicitly to
 // the real client protocol version (1.21.5, matching your screenshot).
-const VERSION = process.env.MC_VERSION || '1.21.5';
+const VERSION = process.env.MC_VERSION || '1.21.11';
 
 // Reconnect settings — spaced out so the server/host doesn't flag rapid reconnects
 const MIN_RECONNECT_DELAY_MS = parseInt(process.env.MIN_RECONNECT_DELAY_MS || '15000', 10); // 15s
