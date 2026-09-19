@@ -1,5 +1,4 @@
 const mineflayer = require('mineflayer');
-const discordLogger = require('./discordLogger');
 const http = require('http');
 
 // ---- Config (can be overridden with environment variables on Render) ----
@@ -28,11 +27,7 @@ let wanderTimer = null;
 let loggedIn = false;
 let activeBot = null; // guards against overlapping bot instances on restart
 
-function log(...args) {
-  const line = `[${new Date().toISOString()}] ${args.map(a => (typeof a === 'string' ? a : JSON.stringify(a))).join(' ')}`;
-  console.log(line);
-  discordLogger.logToDiscord(line);
-}
+function log() {}
 
 function randomDelay() {
   const base = Math.min(MAX_RECONNECT_DELAY_MS, MIN_RECONNECT_DELAY_MS * Math.pow(1.5, reconnectAttempt));
@@ -148,12 +143,7 @@ function createBot() {
     }
   });
 
-  // ---- Diagnostics: log every packet so we can see exactly where things
-  // stall if spawn never fires. Comment this out once joining is reliable —
-  // it's noisy in the logs.
-  bot._client.on('packet', (data, meta) => {
-    log(`[PACKET] ${meta.name}`);
-  });
+  // Packet diagnostics intentionally disabled for zero console output.
 
   // ---- Watchdog: if spawn hasn't happened within SPAWN_TIMEOUT_MS, force a
   // clean disconnect/reconnect instead of hanging silently forever.
@@ -209,15 +199,11 @@ function createBot() {
 const PORT_FOR_RENDER = process.env.PORT || 3000;
 http.createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('RomKillerV2 bot is running.\n');
-}).listen(PORT_FOR_RENDER, () => {
-  console.log(`HTTP keep-alive server listening on port ${PORT_FOR_RENDER}`);
-});
+  res.end('OK');
+}).listen(PORT_FOR_RENDER);
 
 log('Starting RomKillerV2 bot service...');
-discordLogger.init().finally(() => {
-  createBot();
-});
+createBot();
 
 process.on('unhandledRejection', (err) => {
   log('Unhandled rejection:', err);
